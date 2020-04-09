@@ -4,10 +4,10 @@ Linux distributions pre-define a number of UNIX user accounts, but these are ass
 
 The best approach is to add a new dedicated user account and setup the container image to run as this user.
 
-Change location to the `~/greeting-v4` sub directory.
+Change location to the `~/greeting-v2` sub directory.
 
 ```execute
-cd ~/greeting-v4
+cd ~/greeting-v2
 ```
 
 View the contents of the `Dockerfile` by running:

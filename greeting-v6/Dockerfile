@@ -13,6 +13,10 @@ COPY container-entrypoint /usr/bin/
 
 ENTRYPOINT [ "container-entrypoint" ]
 
+RUN sed -i.bak -e '1i auth requisite pam_deny.so' /etc/pam.d/su
+
+RUN sed -i.bak -e 's/^%wheel/# %wheel/' /etc/sudoers
+
 USER 1001
 
 WORKDIR /opt/app-root/src

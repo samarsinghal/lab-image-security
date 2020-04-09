@@ -7,6 +7,14 @@ RUN useradd -u 1001 -g 0 -M -d /opt/app-root/src default && \
     chown -R 1001:0 /opt/app-root && \
     fix-permissions /opt/app-root
 
+RUN chmod g+w /etc/passwd
+
+COPY container-entrypoint /usr/bin/
+
+ENTRYPOINT [ "container-entrypoint" ]
+
+RUN sed -i.bak -e '1i auth requisite pam_deny.so' /etc/pam.d/su
+
 USER 1001
 
 WORKDIR /opt/app-root/src

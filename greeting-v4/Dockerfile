@@ -1,8 +1,17 @@
 FROM fedora:30
 
+COPY fix-permissions /usr/bin/
+
 RUN useradd -u 1001 -g 0 -M -d /opt/app-root/src default && \
     mkdir -p /opt/app-root/src && \
-    chown -R 1001:0 /opt/app-root
+    chown -R 1001:0 /opt/app-root && \
+    fix-permissions /opt/app-root
+
+RUN chmod g+w /etc/passwd
+
+COPY container-entrypoint /usr/bin/
+
+ENTRYPOINT [ "container-entrypoint" ]
 
 USER 1001
 
@@ -11,6 +20,8 @@ WORKDIR /opt/app-root/src
 ENV HOME=/opt/app-root/src \
     PATH=/opt/app-root/src/bin:/opt/app-root/bin:$PATH
 
-COPY hello goodbye party bin/
+COPY --chown=1001:0 hello goodbye party bin/
+
+RUN fix-permissions /opt/app-root
 
 CMD [ "hello" ]

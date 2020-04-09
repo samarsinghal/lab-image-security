@@ -54,10 +54,10 @@ The means of disabling use of `sudo` so this cannot be done is to remove the abi
 RUN sed -i.bak -e 's/^%wheel/# %wheel/' /etc/sudoers
 ```
 
-To verify this change, switch location to the `~/greeting-v8` sub directory.
+To verify this change, switch location to the `~/greeting-v6` sub directory.
 
 ```execute
-cd ~/greeting-v8
+cd ~/greeting-v6
 ```
 
 View the contents of the `Dockerfile` by running:

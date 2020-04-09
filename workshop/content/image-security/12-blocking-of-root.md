@@ -14,10 +14,10 @@ auth requisite pam_deny.so
 
 This will block all use of `su`, even for the `root` user.
 
-To verify this change, switch location to the `~/greeting-v7` sub directory.
+To verify this change, switch location to the `~/greeting-v5` sub directory.
 
 ```execute
-cd ~/greeting-v7
+cd ~/greeting-v5
 ```
 
 View the contents of the `Dockerfile` by running:

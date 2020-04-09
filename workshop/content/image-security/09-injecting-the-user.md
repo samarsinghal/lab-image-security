@@ -48,10 +48,10 @@ fi
 exec "$@"
 ```
 
-To verify these changes, switch location to the `~/greeting-v6` sub directory.
+To verify these changes, switch location to the `~/greeting-v4` sub directory.
 
 ```execute
-cd ~/greeting-v6
+cd ~/greeting-v4
 ```
 
 View the contents of the `Dockerfile` by running:

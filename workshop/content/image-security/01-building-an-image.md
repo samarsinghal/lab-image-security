@@ -6,10 +6,10 @@ The `podman` application is an alternative to `docker`. It is able to produce co
 
 The `podman` application accepts the same sub commands that `docker` accepts. All the `podman` commands you run in this workshop, you can use with `docker` by replacing `podman` with `docker` in the command line. We are using `podman` rather than `docker` as it isn't safe to enable the use of the `docker` daemon within this workshop environment.
 
-To create our first container, change to the `~/greeting-v3` sub directory.
+To create our first container, change to the `~/greeting-v1` sub directory.
 
 ```execute
-cd ~/greeting-v3
+cd ~/greeting-v1
 ```
 
 List the files in the directory.

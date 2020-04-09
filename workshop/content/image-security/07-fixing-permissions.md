@@ -92,10 +92,10 @@ RUN fix-permissions /opt/app-root
 
 This will result in copies being made of any files which had to have permissions changed because the `COPY` was a separate layer of its own. There is no way to avoid this, as the `COPY` instruction provides no way of setting permissions at the time files are copied into the container image.
 
-To verify these changes, switch location to the `~/greeting-v5` sub directory.
+To verify these changes, switch location to the `~/greeting-v3` sub directory.
 
 ```execute
-cd ~/greeting-v5
+cd ~/greeting-v3
 ```
 
 View the contents of the `Dockerfile` by running:
