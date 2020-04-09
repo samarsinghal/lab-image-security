@@ -9,7 +9,7 @@ The `podman` application accepts the same sub commands that `docker` accepts. Al
 To create our first container, change to the `~/greeting-v3` sub directory.
 
 ```execute
-cd ~/greeting-v1
+cd ~/greeting-v3
 ```
 
 List the files in the directory.
