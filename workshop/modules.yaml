@@ -1,12 +1,33 @@
 modules:
     workshop-overview:
         name: Workshop Overview
-        exit_sign: Setup Environment
-    setup-environment:
-        name: Setup Environment
         exit_sign: Start Workshop
-    exercises/01-sample-content:
-        name: Sample Content
+    image-security/01-building-an-image:
+        name: Building an Image
+    image-security/02-running-as-root:
+        name: Running as Root
+    image-security/03-dedicated-user:
+        name: Dedicated User
+    image-security/04-user-workspace:
+        name: User Workspace
+    image-security/05-random-user-id:
+        name: Random User ID
+    image-security/06-filesystem-access:
+        name: Filesystem Access
+    image-security/07-fixing-permissions:
+        name: Fixing Permissions
+    image-security/08-identifying-users:
+        name: Identifying Users
+    image-security/09-injecting-the-user:
+        name: Injecting the User
+    image-security/10-root-escalation:
+        name: Root Escalation
+    image-security/11-linux-capabilities:
+        name: Linux Capabilities
+    image-security/12-blocking-of-root:
+        name: Blocking of Root
+    image-security/13-blocking-of-sudo:
+        name: Blocking of Sudo
     workshop-summary:
         name: Workshop Summary
         exit_sign: Finish Workshop

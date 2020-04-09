@@ -1,19 +1,233 @@
 apiVersion: training.eduk8s.io/v1alpha1
 kind: Workshop
 metadata:
-  name: lab-markdown-sample
+  name: lab-image-security
 spec:
   vendor: eduk8s.io
-  title: Markdown Sample
-  description: A sample workshop using Markdown
-  url: https://github.com/eduk8s/lab-markdown-sample
-  #image: quay.io/eduk8s/lab-markdown-sample:master
-  content: github.com/eduk8s/lab-markdown-sample
-  duration: 15m
+  title: Image Security
+  description: An interactive workshop on constructing secure images.
+  url: https://github.com/eduk8s-labs/lab-image-security
+  #image: quay.io/eduk8s-labs/lab-image-security:master
+  content: github.com/eduk8s-labs/lab-image-security
+  duration: 45m
   session:
-    budget: small
+    budget: medium
     applications:
-      console:
+      terminal:
         enabled: true
-      editor:
-        enabled: true
+        layout: split
+    env:
+    - name: REGISTRY_HOST
+      value: $(session_namespace)-registry.$(ingress_domain)
+    - name: REGISTRY_PASSWORD
+      value: eduk8s
+    patches:
+      containers:
+      - name: workshop
+        resources:
+          requests:
+            memory: 256Mi
+          limits:
+            memory: 768Mi
+        securityContext:
+          privileged: true
+        volumeMounts:
+        - name: podman
+          mountPath: /run/containers
+          subPath: run-containers
+        - name: podman
+          mountPath: /var/lib/containers
+          subPath: var-lib-containers
+        - name: registry
+          mountPath: /var/run/registry
+      securityContext:
+        fsGroup: 0
+      volumes:
+      - name: podman
+        persistentVolumeClaim:
+          claimName: $(session_namespace)-podman
+      - name: registry
+        configMap:
+          name: $(session_namespace)-registry
+          items:
+          - key: config.json
+            path: config.json
+    objects:
+    - apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        namespace: $(workshop_namespace)
+        name: $(session_namespace)-podman
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 5Gi
+    - apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        namespace: $(workshop_namespace)
+        name: $(session_namespace)-registry
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 5Gi
+    - apiVersion: v1
+      kind: ConfigMap
+      metadata:
+        namespace: $(workshop_namespace)
+        name: $(session_namespace)-registry
+      data:
+        htpasswd: |-
+          eduk8s:$2y$05$Oe5Khp7HbllL1oANqmCPSOy1O656z9Z6ETv6GI/DblawxnT/qVUjK
+        config.json: |-
+          {
+            "auths": {
+               "$(session_namespace)-registry.$(ingress_domain)": {
+                 "auth": "ZWR1azhzOmVkdWs4cw=="
+               }
+            }
+          }
+    - apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        namespace: $(workshop_namespace)
+        name: $(session_namespace)-registry
+      spec:
+        replicas: 1
+        selector:
+          matchLabels:
+            deployment: $(session_namespace)-registry
+        strategy:
+          type: Recreate
+        template:
+          metadata:
+            labels:
+              deployment: $(session_namespace)-registry
+          spec:
+            containers:
+            - name: registry
+              image: registry.hub.docker.com/library/registry:2.6.1
+              imagePullPolicy: IfNotPresent
+              ports:
+              - containerPort: 5000
+                protocol: TCP
+              env:
+              - name: REGISTRY_STORAGE_DELETE_ENABLED
+                value: "true"
+              - name: REGISTRY_AUTH
+                value: htpasswd
+              - name: REGISTRY_AUTH_HTPASSWD_REALM
+                value: Image Registry
+              - name: REGISTRY_AUTH_HTPASSWD_PATH
+                value: /auth/htpasswd
+              volumeMounts:
+              - name: data
+                mountPath: /var/lib/registry
+              - name: auth
+                mountPath: /auth
+            securityContext:
+              runAsUser: 1000
+              fsGroup: 0
+            volumes:
+            - name: data
+              persistentVolumeClaim:
+                claimName: $(session_namespace)-registry
+            - name: auth
+              configMap:
+                name: $(session_namespace)-registry
+                items:
+                - key: htpasswd
+                  path: htpasswd
+    - apiVersion: v1
+      kind: Service
+      metadata:
+        namespace: $(workshop_namespace)
+        name: $(session_namespace)-registry
+      spec:
+        type: ClusterIP
+        ports:
+        - port: 5000
+          targetPort: 5000
+        selector:
+          deployment: $(session_namespace)-registry
+    - apiVersion: extensions/v1beta1
+      kind: Ingress
+      metadata:
+        namespace: $(workshop_namespace)
+        name: $(session_namespace)-registry
+        annotations:
+          nginx.ingress.kubernetes.io/proxy-body-size: 512m
+      spec:
+        rules:
+        - host: $(session_namespace)-registry.$(ingress_domain)
+          http:
+            paths:
+            - path: "/"
+              backend:
+                serviceName: $(session_namespace)-registry
+                servicePort: 5000
+        tls:
+        - hosts:
+          - "*.$(ingress_domain)"
+          secretName: "$(ingress_secret)"
+    - apiVersion: rbac.authorization.k8s.io/v1
+      kind: RoleBinding
+      metadata:
+        namespace: $(workshop_namespace)
+        name: $(session_namespace)-podman
+      roleRef:
+        apiGroup: rbac.authorization.k8s.io
+        kind: ClusterRole
+        name: $(workshop_namespace)-podman
+      subjects:
+      - kind: ServiceAccount
+        namespace: $(workshop_namespace)
+        name: $(service_account)
+  workshop:
+    objects:
+    - apiVersion: policy/v1beta1
+      kind: PodSecurityPolicy
+      metadata:
+        name: $(workshop_namespace)-podman
+      spec:
+        privileged: true
+        allowPrivilegeEscalation: true
+        requiredDropCapabilities:
+        - KILL
+        - MKNOD
+        hostIPC: false
+        hostNetwork: false
+        hostPID: false
+        hostPorts: []
+        runAsUser:
+          rule: MustRunAsNonRoot
+        seLinux:
+          rule: RunAsAny
+        fsGroup:
+          rule: RunAsAny
+        supplementalGroups:
+          rule: RunAsAny
+        volumes:
+        - configMap
+        - downwardAPI
+        - emptyDir
+        - persistentVolumeClaim
+        - projected
+        - secret
+    - apiVersion: rbac.authorization.k8s.io/v1
+      kind: ClusterRole
+      metadata:
+        name: $(workshop_namespace)-podman
+      rules:
+      - apiGroups:
+        - policy
+        resources:
+        - podsecuritypolicies
+        verbs:
+        - use
+        resourceNames:
+        - $(workshop_namespace)-podman

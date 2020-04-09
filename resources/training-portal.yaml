@@ -1,9 +1,11 @@
 apiVersion: training.eduk8s.io/v1alpha1
 kind: TrainingPortal
 metadata:
-  name: lab-markdown-sample
+  name: lab-image-security
 spec:
   portal:
     capacity: 1
+    expires: 45m
+    orphaned: 5m
   workshops:
-  - name: lab-markdown-sample
+  - name: lab-image-security

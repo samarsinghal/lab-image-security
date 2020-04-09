@@ -1,1 +1,1 @@
-This is the last page of the workshop. Include in this page a summary of the workshop and any links to resources relevant to the workshop. This ensures anyone doing the workshop has material they can research later to learn more.
+In this workshop you learnt some techniques for building secure images and running them. These are by far not the only things you should consider when running applications in containers to ensure it is done in a secure way, but do represent some topics not usually covered by other commentaries on the topic.
