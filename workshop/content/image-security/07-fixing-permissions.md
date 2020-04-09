@@ -119,5 +119,5 @@ podman run --rm -u 1000000 greeting party
 This time the script should complete successfully as the permissions of the directory allow it to create files.
 
 ```execute
-podman run --rm -u 1000000 greeting ls -alsd ~
+podman run --rm -u 1000000 greeting ls -alsd /opt/app-root/src
 ```
