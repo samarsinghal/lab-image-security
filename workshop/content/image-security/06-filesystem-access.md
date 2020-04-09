@@ -41,7 +41,7 @@ The script failed because it attempted to write to a file, but the user ID the c
 Running:
 
 ```execute
-podman run --rm -u 1000000 greeting ls -alsd ~
+podman run --rm -u 1000000 greeting ls -alsd /opt/app-root/src
 ```
 
 you should see output similar to:
