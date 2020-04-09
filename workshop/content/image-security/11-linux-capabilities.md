@@ -1,6 +1,6 @@
-Container platforms such as OpenShift avoid this problem with root escalation by applying a more strict default security policy on containers. When using `podman` or `docker` though there is nothing by default in place to prevent it. Other container platforms may also not have default security policies in place which prevent this.
+Container platforms may avoid this problem with root escalation by applying a more strict default security policy on containers. When using `podman` or `docker` though there is nothing by default in place to prevent it.
 
-The way that OpenShift avoids the problem is to drop the Linux capabilities from the container which allow a user to change user ID through requests to the Linux kernel.
+The way to avoid the problem is to drop the Linux capabilities from the container which allow a user to change user ID through requests to the Linux kernel.
 
 The two capabilities in question here are `SETUID` and `SETGID`.
 

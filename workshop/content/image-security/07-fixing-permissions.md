@@ -62,7 +62,7 @@ In case the above steps need to change, rather than use those above, you can obt
 
 * https://github.com/sclorg/s2i-base-container/blob/master/core/root/usr/bin/fix-permissions
 
-Note that the script does still required the `find` command, so the system package for it also had to be installed.
+Note that the script does still require the `find` command, so the system package for it also had to be installed.
 
 ```
 RUN dnf install -y --setopt=tsflags=nodocs findutils && \
