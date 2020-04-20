@@ -1,4 +1,4 @@
-Container platforms may avoid this problem with root escalation by applying a more strict default security policy on containers. When using `docker` or `docker` though there is nothing by default in place to prevent it.
+Container platforms may avoid this problem with root escalation by applying a more strict default security policy on containers. When using `docker` though there is nothing by default in place to prevent it.
 
 The way to avoid the problem is to drop the Linux capabilities from the container which allow a user to change user ID through requests to the Linux kernel.
 
