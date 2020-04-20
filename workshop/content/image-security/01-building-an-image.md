@@ -1,4 +1,4 @@
-Various tools are available to help you run applications in containers. The most well known tool is called `docker`. In this workshop, we will be not be using `docker`.
+Various tools are available to help you run applications in containers. The most well known tool is called `docker`, so we will be using it in this workshop.
 
 To create our first container, change to the `~/greeting-v1` sub directory.
 

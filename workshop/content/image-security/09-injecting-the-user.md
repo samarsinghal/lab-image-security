@@ -72,12 +72,10 @@ Now run:
 docker run --rm -u 1000000 greeting whoami
 ```
 
-Okay, we are cheating a little in that this is still utilising the fact that `docker run` will inject the user. It didn't fail at least by adding a second unnecessary entry.
+This time it succeeds. To verify that an entry was added to the `/etc/passwd` file run:
 
 ```execute
 docker run --rm -u 1000000 greeting grep 1000000 /etc/passwd
 ```
-
-You will need to trust that when run with `docker run`, it will work as advertised.
 
 This solves the problem, but is not a complete solution because the `/etc/passwd` being writable can be taken advantage of to become the `root` user. Make sure you keep reading and apply the other changes described.

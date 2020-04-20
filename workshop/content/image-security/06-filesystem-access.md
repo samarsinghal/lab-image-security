@@ -15,7 +15,7 @@ docker run --rm -u 1000000 greeting party
 This time you should seen an error message.
 
 ```
-/opt/app-root/src/bin/party: line 3: /opt/app-root/src/party.txt: Permission denied
+/opt/app-root/src/bin/party: line 5: /opt/app-root/src/party.txt: Permission denied
 ```
 
 Look at the contents of the script, by running:

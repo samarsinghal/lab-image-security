@@ -13,16 +13,16 @@ docker run --rm -u 1000000 greeting id
 When using `docker run` the output will be:
 
 ```
-uid=1000000(1000000) gid=0(root) groups=0(root)
-```
-
-Of note, if you had instead been using `docker run`, the output would be:
-
-```
 uid=1000000 gid=0(root) groups=0(root)
 ```
 
-This marks a difference between `docker` and `docker` which you need to be mindful of if wishing to create a container image which is portable between different container runtimes.
+Of note, the result here can be different on other container runtimes. If you had been using `podman` instead of `docker`, the output would be:
+
+```
+uid=1000000(1000000) gid=0(root) groups=0(root)
+```
+
+Subtle differences like this could cause problems if you developed your container image for one container runtime, but later then needed to deploy it on another.
 
 To illustrate the difference, run:
 
@@ -30,34 +30,38 @@ To illustrate the difference, run:
 docker run --rm -u 1000000 greeting whoami
 ```
 
-For `docker run` the output will be:
-
-```
-1000000
-```
-
-If instead you were to use `docker run`, the output would be the error:
+For `docker run` the output will be the error:
 
 ```
 whoami: cannot find name for user ID 1000000
 ```
 
-The reason the error occurs is because there is no entry in the `/etc/passwd` file of the container image, `whoami` cannot look up the user name for the user ID.
+If instead you were to use `podman run`, the output would be:
 
-It does succeed for `docker run` though, as `docker` will detect that there is no entry in `/etc/passwd` and inject one for you automatically. As a result, running:
-
-```execute
-docker run --rm -u 1000000 greeting grep 1000000 /etc/passwd
+```
+1000000
 ```
 
-will for `docker` yield:
+The reason the error occurs in the case of `docker` is because there is no entry in the `/etc/passwd` file of the container image, and so `whoami` cannot look up the user name for the user ID.
+
+It does succeed for `podman run` though, as `podman` will detect that there is no entry in `/etc/passwd` and inject one for you automatically when the container is started. As a result, had you `podman` and run:
+
+```
+podman run --rm -u 1000000 greeting grep 1000000 /etc/passwd
+```
+
+it will yield:
 
 ```
 1000000:x:1000000:0:container user:/opt/app-root/src:/bin/sh
 ```
 
-When adding the entry, `docker` will use as the home directory for the user the last value of `WORKDIR` as set in the `Dockerfile`.
+When adding the entry, `podman` will use as the home directory for the user the last value of `WORKDIR` as set in the `Dockerfile`.
 
 If using `docker run` no such entry would exist.
 
-For a container image that needs to be portable to different container runtimes, you will need to accomodate for the lack of an entry in the `/etc/passwd` file. This is because a lack of an entry can cause some applications to fail. Before we address that though, we are going to look at the issue of file system access when run as a random user ID.
+For a container image that needs to be portable to different container runtimes, you will need to accomodate for the lack of an entry in the `/etc/passwd` file. This is because a lack of an entry can cause some applications to fail.
+
+If you had originally used `podman` when developing your container image and not taken this into consideration, your image could fail when run on `docker`.
+
+Before we address that though, we are going to look at the issue of file system access when run as a random user ID.
