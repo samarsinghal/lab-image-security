@@ -40,19 +40,19 @@ CMD [ "hello" ]
 We have made a few changes to the `Dockerfile` in this example. Before diving into the changes, build the image by running:
 
 ```execute
-podman build -t greeting .
+docker build -t greeting .
 ```
 
 Run the image to test it:
 
 ```execute
-podman run --rm greeting
+docker run --rm greeting
 ```
 
 Now check what user ID it is running as:
 
 ```execute
-podman run --rm greeting id
+docker run --rm greeting id
 ```
 
 The result should be:

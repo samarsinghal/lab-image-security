@@ -1,7 +1,7 @@
 To illustrate the key issue we want to address, run the `greeting` container image with the `id` command.
 
 ```execute
-podman run --rm greeting id
+docker run --rm greeting id
 ```
 
 The result will be:
@@ -22,10 +22,10 @@ Rather than seeing containers as a firewall which will protect you, allowing you
 
 Best practice therefore is not to run application processes as `root`, even when in a container.
 
-When running containers using `podman run`, you can override the user ID that a container is run as using the `-u` option. To run as the user `nobody` defined by Fedora, you can use:
+When running containers using `docker run`, you can override the user ID that a container is run as using the `-u` option. To run as the user `nobody` defined by Fedora, you can use:
 
 ```execute
-podman run --rm -u nobody greeting id
+docker run --rm -u nobody greeting id
 ```
 
 This will produce:

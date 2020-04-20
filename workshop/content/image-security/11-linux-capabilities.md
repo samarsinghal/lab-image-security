@@ -1,17 +1,17 @@
-Container platforms may avoid this problem with root escalation by applying a more strict default security policy on containers. When using `podman` or `docker` though there is nothing by default in place to prevent it.
+Container platforms may avoid this problem with root escalation by applying a more strict default security policy on containers. When using `docker` or `docker` though there is nothing by default in place to prevent it.
 
 The way to avoid the problem is to drop the Linux capabilities from the container which allow a user to change user ID through requests to the Linux kernel.
 
 The two capabilities in question here are `SETUID` and `SETGID`.
 
-When using `podman`, you can drop these capabilities using the `--drop-cap` option.
+When using `docker`, you can drop these capabilities using the `--drop-cap` option.
 
 Let's try to become `root` again when these capabilities are dropped.
 
 Start again with the interactive shell
 
 ```execute
-podman run --cap-drop SETUID --cap-drop SETGID -it --rm greeting bash
+docker run --cap-drop SETUID --cap-drop SETGID -it --rm greeting bash
 ```
 
 Create the copy of the `/etc/passwd` file.
@@ -61,5 +61,5 @@ Regardless of measures we can put in place in the container image to prevent thi
 Stop the container by killing it.
 
 ```execute-2
-podman kill `podman ps -ql`
+docker kill `docker ps -ql`
 ```

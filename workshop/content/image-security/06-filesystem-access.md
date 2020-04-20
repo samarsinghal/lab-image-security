@@ -1,7 +1,7 @@
 Up till this point, the commands we have been running with our `greeting` container displayed a message but did not try and interact with the filesystem. In the last update to the `Dockerfile` an extra script was snuck in. This was called `party`. To run this command use:
 
 ```execute
-podman run --rm greeting party
+docker run --rm greeting party
 ```
 
 The output should be "Party".
@@ -9,7 +9,7 @@ The output should be "Party".
 Run it again, but this time override the user ID the container runs as:
 
 ```execute
-podman run --rm -u 1000000 greeting party
+docker run --rm -u 1000000 greeting party
 ```
 
 This time you should seen an error message.
@@ -41,7 +41,7 @@ The script failed because it attempted to write to a file, but the user ID the c
 Running:
 
 ```execute
-podman run --rm -u 1000000 greeting ls -alsd /opt/app-root/src
+docker run --rm -u 1000000 greeting ls -alsd /opt/app-root/src
 ```
 
 you should see output similar to:

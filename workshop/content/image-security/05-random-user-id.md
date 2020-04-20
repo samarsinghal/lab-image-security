@@ -7,10 +7,10 @@ The forced use of different user IDs for applications deployed in each namespace
 To simulate this type of deployment environment, you can run the container image with an arbitrary user ID which doesn't have a matching user in the `/etc/passwd` file of the container image.
 
 ```execute
-podman run --rm -u 1000000 greeting id
+docker run --rm -u 1000000 greeting id
 ```
 
-When using `podman run` the output will be:
+When using `docker run` the output will be:
 
 ```
 uid=1000000(1000000) gid=0(root) groups=0(root)
@@ -22,15 +22,15 @@ Of note, if you had instead been using `docker run`, the output would be:
 uid=1000000 gid=0(root) groups=0(root)
 ```
 
-This marks a difference between `podman` and `docker` which you need to be mindful of if wishing to create a container image which is portable between different container runtimes.
+This marks a difference between `docker` and `docker` which you need to be mindful of if wishing to create a container image which is portable between different container runtimes.
 
 To illustrate the difference, run:
 
 ```execute
-podman run --rm -u 1000000 greeting whoami
+docker run --rm -u 1000000 greeting whoami
 ```
 
-For `podman run` the output will be:
+For `docker run` the output will be:
 
 ```
 1000000
@@ -44,19 +44,19 @@ whoami: cannot find name for user ID 1000000
 
 The reason the error occurs is because there is no entry in the `/etc/passwd` file of the container image, `whoami` cannot look up the user name for the user ID.
 
-It does succeed for `podman run` though, as `podman` will detect that there is no entry in `/etc/passwd` and inject one for you automatically. As a result, running:
+It does succeed for `docker run` though, as `docker` will detect that there is no entry in `/etc/passwd` and inject one for you automatically. As a result, running:
 
 ```execute
-podman run --rm -u 1000000 greeting grep 1000000 /etc/passwd
+docker run --rm -u 1000000 greeting grep 1000000 /etc/passwd
 ```
 
-will for `podman` yield:
+will for `docker` yield:
 
 ```
 1000000:x:1000000:0:container user:/opt/app-root/src:/bin/sh
 ```
 
-When adding the entry, `podman` will use as the home directory for the user the last value of `WORKDIR` as set in the `Dockerfile`.
+When adding the entry, `docker` will use as the home directory for the user the last value of `WORKDIR` as set in the `Dockerfile`.
 
 If using `docker run` no such entry would exist.
 

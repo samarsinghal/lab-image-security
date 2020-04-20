@@ -29,13 +29,13 @@ cat Dockerfile
 Build the container image:
 
 ```execute
-podman build -t greeting .
+docker build -t greeting .
 ```
 
 Start a container with an interactive shell:
 
 ```execute
-podman run -it --rm greeting bash
+docker run -it --rm greeting bash
 ```
 
 We didn't drop any capabilities in this case as we want to make sure the disabling of `su` works even without doing that.

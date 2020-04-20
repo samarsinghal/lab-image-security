@@ -25,7 +25,7 @@ Deployment
 To load the workshop definition run:
 
 ```
-kubectl apply -k github.com/eduk8s-labs/lab-image-security
+kubectl apply -f https://raw.githubusercontent.com/eduk8s-labs/lab-image-security/master/resources/workshop.yaml
 ```
 
 To deploy a sample training portal which hosts the workshop, run:
@@ -56,4 +56,5 @@ kubectl delete -f https://raw.githubusercontent.com/eduk8s-labs/lab-image-securi
 When you are finished with the workshop definition, you can delete it by running:
 
 ```
-kubectl delete -k github.com/eduk8s-labs/lab-image-security
+kubectl delete -f https://raw.githubusercontent.com/eduk8s-labs/lab-image-security/master/resources/workshop.yaml
+```

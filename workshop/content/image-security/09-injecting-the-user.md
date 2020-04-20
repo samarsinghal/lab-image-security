@@ -63,19 +63,19 @@ cat Dockerfile
 Build the container image:
 
 ```execute
-podman build -t greeting .
+docker build -t greeting .
 ```
 
 Now run:
 
 ```execute
-podman run --rm -u 1000000 greeting whoami
+docker run --rm -u 1000000 greeting whoami
 ```
 
-Okay, we are cheating a little in that this is still utilising the fact that `podman run` will inject the user. It didn't fail at least by adding a second unnecessary entry.
+Okay, we are cheating a little in that this is still utilising the fact that `docker run` will inject the user. It didn't fail at least by adding a second unnecessary entry.
 
 ```execute
-podman run --rm -u 1000000 greeting grep 1000000 /etc/passwd
+docker run --rm -u 1000000 greeting grep 1000000 /etc/passwd
 ```
 
 You will need to trust that when run with `docker run`, it will work as advertised.

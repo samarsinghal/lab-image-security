@@ -5,7 +5,8 @@ metadata:
 spec:
   portal:
     capacity: 1
-    expires: 45m
+    reserved: 1
+    expires: 60m
     orphaned: 5m
   workshops:
   - name: lab-image-security

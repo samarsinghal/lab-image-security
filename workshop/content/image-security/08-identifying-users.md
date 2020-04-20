@@ -1,6 +1,6 @@
 We have a solution for how you can set the permissions of directories and files so that when a container is run as a random user ID, it can create and/or modify files. Time to address the issues arising from the user ID a container runs as not having an entry in the `/etc/passwd` file.
 
-As we saw, this isn't actually an issue if using `podman run` as it automatically injects an entry into the `/etc/passwd` file when none exists for the user ID the container is run as. This is not done when using `docker run` though so we need to cater for that.
+As we saw, this isn't actually an issue if using `docker run` as it automatically injects an entry into the `/etc/passwd` file when none exists for the user ID the container is run as. This is not done when using `docker run` though so we need to cater for that.
 
 There are two solutions one could use to solve this.
 

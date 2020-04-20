@@ -45,7 +45,7 @@ This verifies this also would allow one to become `root`.
 Stop the current container by killing it.
 
 ```execute-2
-podman kill `podman ps -ql`
+docker kill `docker ps -ql`
 ```
 
 The means of disabling use of `sudo` so this cannot be done is to remove the ability for any user in the `wheel` group to run `sudo`. This can be done from the `Dockerfile` using:
@@ -69,13 +69,13 @@ cat Dockerfile
 Build the container image:
 
 ```execute
-podman build -t greeting .
+docker build -t greeting .
 ```
 
 Start a container with an interactive shell:
 
 ```execute
-podman run -it --rm greeting bash
+docker run -it --rm greeting bash
 ```
 
 and go through the steps again to test it.
@@ -119,5 +119,5 @@ default is not in the sudoers file.  This incident will be reported.
 Stop the container once more.
 
 ```execute-2
-podman kill `podman ps -ql`
+docker kill `docker ps -ql`
 ```

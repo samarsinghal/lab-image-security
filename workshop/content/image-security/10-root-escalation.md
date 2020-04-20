@@ -3,7 +3,7 @@ The reason that it is possible for a user to become `root` when `/etc/passwd` is
 To show the consequences of this, start a container with an interactive shell:
 
 ```execute
-podman run -it --rm greeting bash
+docker run -it --rm greeting bash
 ```
 
 In the container, make a copy of the `/etc/passwd` file.
@@ -53,5 +53,5 @@ indicating you are the `root` user inside of the container.
 Stop the container by killing it.
 
 ```execute-2
-podman kill `podman ps -ql`
+docker kill `docker ps -ql`
 ```
