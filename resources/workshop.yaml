@@ -1,14 +1,20 @@
-apiVersion: training.eduk8s.io/v1alpha1
+apiVersion: training.eduk8s.io/v1alpha2
 kind: Workshop
 metadata:
   name: lab-image-security
 spec:
-  vendor: eduk8s.io
   title: Image Security
   description: An interactive workshop on constructing secure images.
   url: https://github.com/eduk8s-labs/lab-image-security
-  content: github.com/eduk8s-labs/lab-image-security
+  content:
+    files: github.com/eduk8s-labs/lab-image-security
+  vendor: eduk8s.io
+  authors:
+  - Graham Dumpleton
+  difficulty: intermediate
   duration: 60m
+  tags:
+  - containers
   session:
     budget: medium
     applications:
