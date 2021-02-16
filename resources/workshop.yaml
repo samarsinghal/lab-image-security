@@ -22,7 +22,20 @@ spec:
       terminal:
         enabled: true
         layout: split
+      console:
+        enabled: true
+        vendor: octant
+      editor:
+        enabled: true
       docker:
         enabled: true
       registry:
         enabled: true
+    ingresses:
+    - name: application
+      port: 8080
+    dashboards:
+      - name: Harbor
+        url: http://harbor.workshop.add2cloud.com/
+      - name: Argocd
+        url: http://argocd.workshop.add2cloud.com/
