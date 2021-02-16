@@ -5,9 +5,9 @@ metadata:
 spec:
   title: Image Security
   description: An interactive workshop on constructing secure images.
-  url: https://github.com/eduk8s-labs/lab-image-security
+  url: https://github.com/samarsinghal/lab-image-security
   content:
-    files: github.com/eduk8s-labs/lab-image-security
+    files: github.com/samarsinghal/lab-image-security
   vendor: eduk8s.io
   authors:
   - Graham Dumpleton
@@ -35,7 +35,7 @@ spec:
     - name: application
       port: 8080
     dashboards:
-      - name: Harbor
-        url: http://harbor.workshop.add2cloud.com/
-      - name: Argocd
-        url: http://argocd.workshop.add2cloud.com/
+    - name: Harbor
+      url: http://harbor.workshop.add2cloud.com/
+    - name: Argocd
+      url: http://argocd.workshop.add2cloud.com/
