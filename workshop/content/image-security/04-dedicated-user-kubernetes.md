@@ -9,8 +9,7 @@ a Pod or Container. Security context settings include, but are not limited to:
 ## Set the security context for a Pod
 
 To specify security settings for a Pod, include the `securityContext` field
-in the Pod specification. The `securityContext` field is a
-[PodSecurityContext](/docs/reference/generated/kubernetes-api/{{< param "version" >}}/#podsecuritycontext-v1-core) object.
+in the Pod specification. 
 The security settings that you specify for a Pod apply to all Containers in the Pod.
 Here is a configuration file for a Pod that has a `securityContext` and an `emptyDir` volume:
 
@@ -132,8 +131,7 @@ exit
 ## Set the security context for a Container
 
 To specify security settings for a Container, include the `securityContext` field
-in the Container manifest. The `securityContext` field is a
-[SecurityContext](/docs/reference/generated/kubernetes-api/{{< param "version" >}}/#securitycontext-v1-core) object.
+in the Container manifest. 
 Security settings that you specify for a Container apply only to
 the individual Container, and they override settings made at the Pod level when
 there is overlap. Container settings do not affect the Pod's Volumes.
