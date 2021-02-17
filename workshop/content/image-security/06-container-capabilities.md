@@ -8,35 +8,51 @@ of the root user. To add or remove Linux capabilities for a Container, include t
 First, see what happens when you don't include a `capabilities` field.
 Here is configuration file that does not add or remove any Container capabilities:
 
-{{< codenew file="pods/security/security-context-3.yaml" >}}
+<!--  {{< codenew file="pods/security/security-context-3.yaml" >}} -->
+
+    apiVersion: v1
+    kind: Pod
+    metadata:
+    name: security-context-demo-3
+    spec:
+    containers:
+    - name: sec-ctx-3
+        image: gcr.io/google-samples/node-hello:1.0
+
+
+Change location to the `~/greeting-v5` sub directory.
+
+```execute
+cd ~/greeting-v5
+```
 
 Create the Pod:
 
-```shell
-kubectl apply -f https://k8s.io/examples/pods/security/security-context-3.yaml
+```execute
+kubectl apply -f security-context-3.yaml
 ```
 
 Verify that the Pod's Container is running:
 
-```shell
+```execute
 kubectl get pod security-context-demo-3
 ```
 
 Get a shell into the running Container:
 
-```shell
+```execute
 kubectl exec -it security-context-demo-3 -- sh
 ```
 
 In your shell, list the running processes:
 
-```shell
+```execute
 ps aux
 ```
 
 The output shows the process IDs (PIDs) for the Container:
 
-```shell
+```execute
 USER  PID %CPU %MEM    VSZ   RSS TTY   STAT START   TIME COMMAND
 root    1  0.0  0.0   4336   796 ?     Ss   18:17   0:00 /bin/sh -c node server.js
 root    5  0.1  0.5 772124 22700 ?     Sl   18:17   0:00 node server.js
@@ -44,7 +60,7 @@ root    5  0.1  0.5 772124 22700 ?     Sl   18:17   0:00 node server.js
 
 In your shell, view the status for process 1:
 
-```shell
+```execute
 cd /proc/1
 cat status
 ```
@@ -60,7 +76,7 @@ CapEff:	00000000a80425fb
 
 Make a note of the capabilities bitmap, and then exit your shell:
 
-```shell
+```execute
 exit
 ```
 
@@ -70,30 +86,43 @@ that it has additional capabilities set.
 Here is the configuration file for a Pod that runs one Container. The configuration
 adds the `CAP_NET_ADMIN` and `CAP_SYS_TIME` capabilities:
 
-{{< codenew file="pods/security/security-context-4.yaml" >}}
+<!--  {{< codenew file="pods/security/security-context-4.yaml" >}} -->
+
+    apiVersion: v1
+    kind: Pod
+    metadata:
+    name: security-context-demo-4
+    spec:
+    containers:
+    - name: sec-ctx-4
+        image: gcr.io/google-samples/node-hello:1.0
+        securityContext:
+        capabilities:
+            add: ["NET_ADMIN", "SYS_TIME"]
+
 
 Create the Pod:
 
-```shell
-kubectl apply -f https://k8s.io/examples/pods/security/security-context-4.yaml
+```execute
+kubectl apply -f security-context-4.yaml
 ```
 
 Get a shell into the running Container:
 
-```shell
+```execute
 kubectl exec -it security-context-demo-4 -- sh
 ```
 
 In your shell, view the capabilities for process 1:
 
-```shell
+```execute
 cd /proc/1
 cat status
 ```
 
 The output shows capabilities bitmap for the process:
 
-```shell
+```execute
 ...
 CapPrm:	00000000aa0435fb
 CapEff:	00000000aa0435fb

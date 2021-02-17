@@ -1,64 +1,208 @@
-To ensure that a container image runs as a non privileged user, we can specify the user to run as in the `Dockerfile`. This is done using the `USER` instruction.
+A security context defines privilege and access control settings for
+a Pod or Container. Security context settings include, but are not limited to:
 
-Linux distributions pre-define a number of UNIX user accounts, but these are associated with specific services and it is wise to avoid them. There is also usually a `nobody` user, but running as this user ID could have other implications.
+* Discretionary Access Control: Permission to access an object, like a file, is based on
+[user ID (UID) and group ID (GID)](https://wiki.archlinux.org/index.php/users_and_groups).
 
-The best approach is to add a new dedicated user account and setup the container image to run as this user.
 
-Change location to the `~/greeting-v2` sub directory.
+<!-- steps -->
+
+## Set the security context for a Pod
+
+To specify security settings for a Pod, include the `securityContext` field
+in the Pod specification. The `securityContext` field is a
+[PodSecurityContext](/docs/reference/generated/kubernetes-api/{{< param "version" >}}/#podsecuritycontext-v1-core) object.
+The security settings that you specify for a Pod apply to all Containers in the Pod.
+Here is a configuration file for a Pod that has a `securityContext` and an `emptyDir` volume:
+
+<!-- {{< codenew file="pods/security/security-context.yaml" >}} -->
+
+    apiVersion: v1
+    kind: Pod
+    metadata:
+    name: security-context-demo
+    spec:
+    securityContext:
+        runAsUser: 1000
+        runAsGroup: 3000
+        fsGroup: 2000
+    volumes:
+    - name: sec-ctx-vol
+        emptyDir: {}
+    containers:
+    - name: sec-ctx-demo
+        image: busybox
+        command: [ "sh", "-c", "sleep 1h" ]
+        volumeMounts:
+        - name: sec-ctx-vol
+        mountPath: /data/demo
+        securityContext:
+        allowPrivilegeEscalation: false
+
+
+In the configuration file, the `runAsUser` field specifies that for any Containers in
+the Pod, all processes run with user ID 1000. The `runAsGroup` field specifies the primary group ID of 3000 for
+all processes within any containers of the Pod. If this field is omitted, the primary group ID of the containers
+will be root(0). Any files created will also be owned by user 1000 and group 3000 when `runAsGroup` is specified.
+Since `fsGroup` field is specified, all processes of the container are also part of the supplementary group ID 2000.
+The owner for volume `/data/demo` and any files created in that volume will be Group ID 2000.
+
+
+Change location to the `~/greeting-v3` sub directory.
 
 ```execute
-cd ~/greeting-v2
+cd ~/greeting-v3
 ```
 
-View the contents of the `Dockerfile` by running:
+Create the Pod:
 
 ```execute
-cat Dockerfile
+kubectl apply -f security-context.yaml
 ```
 
-This time you should see:
-
-```
-FROM fedora:30
-
-RUN useradd -u 1001 -g 0 -M -d /opt/app-root/src default && \
-    mkdir -p /opt/app-root/src && \
-    chown -R 1001:0 /opt/app-root
-
-USER 1001
-
-WORKDIR /opt/app-root/src
-
-ENV HOME=/opt/app-root/src \
-    PATH=/opt/app-root/src/bin:/opt/app-root/bin:$PATH
-
-COPY hello goodbye party bin/
-
-CMD [ "hello" ]
-```
-
-We have made a few changes to the `Dockerfile` in this example. Before diving into the changes, build the image by running:
+Verify that the Pod's Container is running:
 
 ```execute
-docker build -t greeting .
+kubectl get pod security-context-demo
 ```
 
-Run the image to test it:
+Get a shell to the running Container:
 
 ```execute
-docker run --rm greeting
+kubectl exec -it security-context-demo -- sh
 ```
 
-Now check what user ID it is running as:
+In your shell, list the running processes:
 
 ```execute
-docker run --rm greeting id
+ps
 ```
 
-The result should be:
+The output shows that the processes are running as user 1000, which is the value of `runAsUser`:
+
+```execute
+PID   USER     TIME  COMMAND
+    1 1000      0:00 sleep 1h
+    6 1000      0:00 sh
+...
+```
+
+In your shell, navigate to `/data`, and list the one directory:
+
+```execute
+cd /data
+ls -l
+```
+
+The output shows that the `/data/demo` directory has group ID 2000, which is
+the value of `fsGroup`.
+
+```execute
+drwxrwsrwx 2 root 2000 4096 Jun  6 20:08 demo
+```
+
+In your shell, navigate to `/data/demo`, and create a file:
+
+```execute
+cd demo
+echo hello > testfile
+```
+
+List the file in the `/data/demo` directory:
+
+```execute
+ls -l
+```
+
+The output shows that `testfile` has group ID 2000, which is the value of `fsGroup`.
+
+```execute
+-rw-r--r-- 1 1000 2000 6 Jun  6 20:08 testfile
+```
+
+Run the following command:
+
+```execute
+$ id
+uid=1000 gid=3000 groups=2000
+```
+You will see that gid is 3000 which is same as `runAsGroup` field. If the `runAsGroup` was omitted the gid would
+remain as 0(root) and the process will be able to interact with files that are owned by root(0) group and that have
+the required group permissions for root(0) group.
+
+Exit your shell:
+
+```execute
+exit
+```
+
+
+## Set the security context for a Container
+
+To specify security settings for a Container, include the `securityContext` field
+in the Container manifest. The `securityContext` field is a
+[SecurityContext](/docs/reference/generated/kubernetes-api/{{< param "version" >}}/#securitycontext-v1-core) object.
+Security settings that you specify for a Container apply only to
+the individual Container, and they override settings made at the Pod level when
+there is overlap. Container settings do not affect the Pod's Volumes.
+
+Here is the configuration file for a Pod that has one Container. Both the Pod
+and the Container have a `securityContext` field:
+
+<!--  {{< codenew file="pods/security/security-context-2.yaml" >}} -->
+
+    apiVersion: v1
+    kind: Pod
+    metadata:
+    name: security-context-demo-2
+    spec:
+    securityContext:
+        runAsUser: 1000
+    containers:
+    - name: sec-ctx-demo-2
+        image: gcr.io/google-samples/node-hello:1.0
+        securityContext:
+        runAsUser: 2000
+        allowPrivilegeEscalation: false
+
+
+Create the Pod:
+
+```execute
+kubectl apply -f security-context-2.yaml
+```
+
+Verify that the Pod's Container is running:
+
+```execute
+kubectl get pod security-context-demo-2
+```
+
+Get a shell into the running Container:
+
+```execute
+kubectl exec -it security-context-demo-2 -- sh
+```
+
+In your shell, list the running processes:
 
 ```
-uid=1001(default) gid=0(root) groups=0(root)
+ps aux
 ```
 
-The container is running as the `default` user with user ID of 1001, without needing to tell the container runtime what to run it as.
+The output shows that the processes are running as user 2000. This is the value
+of `runAsUser` specified for the Container. It overrides the value 1000 that is
+specified for the Pod.
+
+```
+USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+2000         1  0.0  0.0   4336   764 ?        Ss   20:36   0:00 /bin/sh -c node server.js
+2000         8  0.1  0.5 772124 22604 ?        Sl   20:36   0:00 node server.js
+...
+```
+
+Exit your shell:
+
+```execute
+exit
+```

@@ -1,5 +1,12 @@
 To illustrate the key issue we want to address, run the `greeting` container image with the `id` command.
 
+Change location to the `~/running-as-root` sub directory.
+
+```execute
+cd ~/running-as-root
+```
+
+
 ```execute
 docker run --rm greeting id
 ```
