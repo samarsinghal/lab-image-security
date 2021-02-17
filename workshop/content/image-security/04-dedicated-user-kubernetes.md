@@ -5,7 +5,6 @@ a Pod or Container. Security context settings include, but are not limited to:
 [user ID (UID) and group ID (GID)](https://wiki.archlinux.org/index.php/users_and_groups).
 
 
-<!-- steps -->
 
 ## Set the security context for a Pod
 
@@ -15,7 +14,6 @@ in the Pod specification. The `securityContext` field is a
 The security settings that you specify for a Pod apply to all Containers in the Pod.
 Here is a configuration file for a Pod that has a `securityContext` and an `emptyDir` volume:
 
-<!-- {{< codenew file="pods/security/security-context.yaml" >}} -->
 
     apiVersion: v1
     kind: Pod
@@ -47,12 +45,6 @@ will be root(0). Any files created will also be owned by user 1000 and group 300
 Since `fsGroup` field is specified, all processes of the container are also part of the supplementary group ID 2000.
 The owner for volume `/data/demo` and any files created in that volume will be Group ID 2000.
 
-
-Change location to the `~/greeting-v3` sub directory.
-
-```execute
-cd ~/greeting-v3
-```
 
 Create the Pod:
 
@@ -149,7 +141,6 @@ there is overlap. Container settings do not affect the Pod's Volumes.
 Here is the configuration file for a Pod that has one Container. Both the Pod
 and the Container have a `securityContext` field:
 
-<!--  {{< codenew file="pods/security/security-context-2.yaml" >}} -->
 
     apiVersion: v1
     kind: Pod

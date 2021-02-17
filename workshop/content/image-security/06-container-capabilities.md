@@ -8,8 +8,6 @@ of the root user. To add or remove Linux capabilities for a Container, include t
 First, see what happens when you don't include a `capabilities` field.
 Here is configuration file that does not add or remove any Container capabilities:
 
-<!--  {{< codenew file="pods/security/security-context-3.yaml" >}} -->
-
     apiVersion: v1
     kind: Pod
     metadata:
@@ -85,8 +83,6 @@ that it has additional capabilities set.
 
 Here is the configuration file for a Pod that runs one Container. The configuration
 adds the `CAP_NET_ADMIN` and `CAP_SYS_TIME` capabilities:
-
-<!--  {{< codenew file="pods/security/security-context-4.yaml" >}} -->
 
     apiVersion: v1
     kind: Pod
