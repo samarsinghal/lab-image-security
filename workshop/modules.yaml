@@ -8,20 +8,20 @@ modules:
         name: Running as Root
     image-security/03-dedicated-user:
         name: Dedicated User
-    image-security/04-user-workspace:
-        name: User Workspace
-    image-security/05-random-user-id:
-        name: Random User ID
-    image-security/06-filesystem-access:
-        name: Filesystem Access
-    image-security/07-fixing-permissions:
-        name: Fixing Permissions
-    image-security/08-identifying-users:
-        name: Identifying Users
-    image-security/09-injecting-the-user:
-        name: Injecting the User
-    image-security/10-root-escalation:
-        name: Root Escalation
+    image-security/04-dedicated-user-kubernetes:
+        name: Dedicated User Kubernetes
+    image-security/05-process-isolation:
+        name: Process Isolation
+    image-security/06-container-capabilities:
+        name: Container Capabilities
+    # image-security/07-fixing-permissions:
+    #     name: Fixing Permissions
+    # image-security/08-identifying-users:
+    #     name: Identifying Users
+    # image-security/09-injecting-the-user:
+    #     name: Injecting the User
+    # image-security/10-root-escalation:
+    #     name: Root Escalation
     image-security/11-linux-capabilities:
         name: Linux Capabilities
     image-security/12-blocking-of-root:

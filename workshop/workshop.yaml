@@ -6,13 +6,16 @@ modules:
     - image-security/01-building-an-image
     - image-security/02-running-as-root
     - image-security/03-dedicated-user
-    - image-security/04-user-workspace
-    - image-security/05-random-user-id
-    - image-security/06-filesystem-access
-    - image-security/07-fixing-permissions
-    - image-security/08-identifying-users
-    - image-security/09-injecting-the-user
-    - image-security/10-root-escalation
+    - image-security/04-dedicated-user-kubernetes
+    - image-security/05-process-isolation
+    - image-security/06-container-capabilities
+    # - image-security/04-user-workspace
+    # - image-security/05-random-user-id
+    # - image-security/06-filesystem-access
+    # - image-security/07-fixing-permissions
+    # - image-security/08-identifying-users
+    # - image-security/09-injecting-the-user
+    # - image-security/10-root-escalation
     - image-security/11-linux-capabilities
     - image-security/12-blocking-of-root
     - image-security/13-blocking-of-sudo

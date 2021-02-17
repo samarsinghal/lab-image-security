@@ -37,5 +37,3 @@ spec:
     dashboards:
     - name: Harbor
       url: http://harbor.workshop.add2cloud.com/
-    - name: Argocd
-      url: http://argocd.workshop.add2cloud.com/

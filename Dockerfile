@@ -55,7 +55,6 @@ RUN curl -L -o /usr/local/bin/kp  https://github.com/vmware-tanzu/kpack-cli/rele
   chmod 755 /usr/local/bin/kp
 RUN curl -sSL "https://github.com/buildpacks/pack/releases/download/v0.14.2/pack-v0.14.2-linux.tgz" | sudo tar -C /usr/local/bin/ --no-same-owner -xzv pack
 RUN curl -sSL "https://github.com/concourse/concourse/releases/download/v6.7.1/fly-6.7.1-linux-amd64.tgz" |sudo tar -C /usr/local/bin/ --no-same-owner -xzv fly
-USER 1001
 
 # Install Carvel tools
 RUN echo "Installing K14s Carvel tools" \
@@ -68,22 +67,8 @@ RUN echo "Installing Istioctl" \
   && cp $PWD/bin/istioctl /usr/local/bin/istioctl \
   && istioctl version
 
-# # Install CF CLI 7
-# RUN echo "Installing CF CLI 7" \
-#   && wget -q -O - https://packages.cloudfoundry.org/debian/cli.cloudfoundry.org.key | apt-key add - \
-#   && echo "deb https://packages.cloudfoundry.org/debian stable main" | tee /etc/apt/sources.list.d/cloudfoundry-cli.list \
-#   && apt-get update \
-#   && apt-get install cf7-cli 
 
-# # Install Bosh 
-# RUN echo "Installing Bosh" \
-#   && wget -q https://github.com/cloudfoundry/bosh-cli/releases/download/v6.4.1/bosh-cli-6.4.1-linux-amd64 \
-#   && mv bosh-cli-6.4.1-linux-amd64 bosh \
-#   && chmod +x bosh \
-#   && mv bosh /usr/local/bin
 
-# Create Aliases
-# RUN echo "alias k=kubectl" > /root/.profile
 
 USER 1001
 
