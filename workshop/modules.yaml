@@ -24,12 +24,12 @@ modules:
     #     name: Injecting the User
     # image-security/10-root-escalation:
     #     name: Root Escalation
-    image-security/11-linux-capabilities:
-        name: Linux Capabilities
-    image-security/12-blocking-of-root:
-        name: Blocking of Root
-    image-security/13-blocking-of-sudo:
-        name: Blocking of Sudo
+    # image-security/11-linux-capabilities:
+    #     name: Linux Capabilities
+    # image-security/12-blocking-of-root:
+    #     name: Blocking of Root
+    # image-security/13-blocking-of-sudo:
+    #     name: Blocking of Sudo
     workshop-summary:
         name: Workshop Summary
         exit_sign: Finish Workshop
