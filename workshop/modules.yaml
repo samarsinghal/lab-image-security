@@ -12,6 +12,8 @@ modules:
         name: Dedicated User
     image-security/04-dedicated-user-kubernetes:
         name: Dedicated User Kubernetes
+    image-security/05-privileged-privilege-escalation:
+        name: Privileged and PrivilegeEescalation
     image-security/06-container-capabilities:
         name: Container Capabilities
     # image-security/07-fixing-permissions:
