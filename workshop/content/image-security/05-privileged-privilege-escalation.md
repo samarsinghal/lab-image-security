@@ -68,7 +68,7 @@ kubectl create -f run-as-non-root.yaml
 Not lets try to access some system functionalities 
 
 ```execute
-kubectl exec -it run-as-non-root-pod -sh 
+kubectl exec -it run-as-non-root-pod -- sh 
 ```
 
 ```execute
@@ -120,13 +120,13 @@ cat run-as-root.yaml
 Create the container 
 
 ```execute
-Kubectl create -f run-as-root.yaml
+kubectl create -f run-as-root.yaml
 ```
 
 Not lets try to access some system functionalities 
 
 ```execute
-kubectl exec -it run-as-root-pod -sh 
+kubectl exec -it run-as-root-pod -- sh 
 ```
 
 ```execute
@@ -137,7 +137,9 @@ Output - Read only filesystem
 
 We still looking at same error, so its not just because of this. Even if we are running as root we still not allowed to run this.
 
+```execute
 exit
+```
 
 Lets try Privileged mode - 
 
@@ -173,13 +175,13 @@ cat privileged.yaml
 Create the container 
 
 ```execute
-Kubectl create -f privileged.yaml
+kubectl create -f privileged.yaml
 ```
 
 Not lets try to access some system functionalities 
 
 ```execute
-kubectl exec -it privileged-pod -sh 
+kubectl exec -it privileged-pod -- sh 
 ```
 
 ```execute
