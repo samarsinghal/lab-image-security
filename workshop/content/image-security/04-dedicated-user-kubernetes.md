@@ -11,7 +11,6 @@ Change location to the `~/dedicated-user-kubernetes` sub directory.
 cd ~/dedicated-user-kubernetes
 ```
 
-
 ## Set the security context for a Pod
 
 To specify security settings for a Pod, include the `securityContext` field
@@ -120,7 +119,7 @@ The output shows that `testfile` has group ID 2000, which is the value of `fsGro
 Run the following command:
 
 ```execute
-$ id
+id
 ```
 
 ```

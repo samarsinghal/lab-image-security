@@ -62,7 +62,7 @@ If unset or false, no such validation will be performed.
 Create the container with no root access
 
 ```execute
-Kubectl create -f run-as-non-root.yaml
+kubectl create -f run-as-non-root.yaml
 ```
 
 Not lets try to access some system functionalities 

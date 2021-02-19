@@ -3,8 +3,8 @@ kind: Pod
 metadata:
   creationTimestamp: null
   labels:
-    run: pod
-  name: pod
+    run: run-as-non-root-pod
+  name: run-as-non-root-pod
 spec:
   securityContext:
     runAsUser: 1000
@@ -15,7 +15,7 @@ spec:
     - -c
     - sleep 1d
     image: busybox
-    name: pod
+    name: run-as-non-root-pod
     resources: {}
     securityContext:
       runAsNonRoot: true

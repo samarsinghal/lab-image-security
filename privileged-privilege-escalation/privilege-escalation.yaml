@@ -3,8 +3,8 @@ kind: Pod
 metadata:
   creationTimestamp: null
   labels:
-    run: pod
-  name: pod
+    run: privilege-escalation-pod
+  name: privilege-escalation-pod
 spec:
   containers:
   - command:
@@ -12,7 +12,7 @@ spec:
     - -c
     - sleep 1d
     image: busybox
-    name: pod
+    name: privilege-escalation-pod
     resources: {}
     securityContext:
       allowPrivilegeEscalation: false
