@@ -2,6 +2,8 @@ modules:
     workshop-overview:
         name: Workshop Overview
         exit_sign: Start Workshop
+    image-security/00-pid-namespace:
+        name: PID Namespce
     image-security/01-building-an-image:
         name: Building an Image
     image-security/02-running-as-root:
@@ -10,8 +12,6 @@ modules:
         name: Dedicated User
     image-security/04-dedicated-user-kubernetes:
         name: Dedicated User Kubernetes
-    image-security/05-process-isolation:
-        name: Process Isolation
     image-security/06-container-capabilities:
         name: Container Capabilities
     # image-security/07-fixing-permissions:

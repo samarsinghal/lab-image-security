@@ -50,7 +50,7 @@ ps aux
 
 The output shows the process IDs (PIDs) for the Container:
 
-```execute
+```
 USER  PID %CPU %MEM    VSZ   RSS TTY   STAT START   TIME COMMAND
 root    1  0.0  0.0   4336   796 ?     Ss   18:17   0:00 /bin/sh -c node server.js
 root    5  0.1  0.5 772124 22700 ?     Sl   18:17   0:00 node server.js
@@ -118,7 +118,7 @@ cat status
 
 The output shows capabilities bitmap for the process:
 
-```execute
+```
 ...
 CapPrm:	00000000aa0435fb
 CapEff:	00000000aa0435fb

@@ -71,7 +71,7 @@ ps
 
 The output shows that the processes are running as user 1000, which is the value of `runAsUser`:
 
-```execute
+```
 PID   USER     TIME  COMMAND
     1 1000      0:00 sleep 1h
     6 1000      0:00 sh
@@ -88,7 +88,7 @@ ls -l
 The output shows that the `/data/demo` directory has group ID 2000, which is
 the value of `fsGroup`.
 
-```execute
+```
 drwxrwsrwx 2 root 2000 4096 Jun  6 20:08 demo
 ```
 
@@ -107,7 +107,7 @@ ls -l
 
 The output shows that `testfile` has group ID 2000, which is the value of `fsGroup`.
 
-```execute
+```
 -rw-r--r-- 1 1000 2000 6 Jun  6 20:08 testfile
 ```
 
@@ -115,8 +115,12 @@ Run the following command:
 
 ```execute
 $ id
+```
+
+```
 uid=1000 gid=3000 groups=2000
 ```
+
 You will see that gid is 3000 which is same as `runAsGroup` field. If the `runAsGroup` was omitted the gid would
 remain as 0(root) and the process will be able to interact with files that are owned by root(0) group and that have
 the required group permissions for root(0) group.
@@ -175,7 +179,7 @@ kubectl exec -it security-context-demo-2 -- sh
 
 In your shell, list the running processes:
 
-```
+```execute
 ps aux
 ```
 
