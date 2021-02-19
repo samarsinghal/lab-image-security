@@ -18,10 +18,10 @@ Here is configuration file that does not add or remove any Container capabilitie
         image: gcr.io/google-samples/node-hello:1.0
 
 
-Change location to the `~/greeting-v5` sub directory.
+Change location to the `~/container-capabilities` sub directory.
 
 ```execute
-cd ~/greeting-v5
+cd ~/container-capabilities
 ```
 
 Create the Pod:

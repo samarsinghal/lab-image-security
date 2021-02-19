@@ -17,7 +17,7 @@ Change location to the `~/privileged-privilege-escalation` sub directory.
 
 
 ```execute
-cd ~/privileged-privileg-escalation
+cd ~/privileged-privilege-escalation
 ```
 
 ```execute

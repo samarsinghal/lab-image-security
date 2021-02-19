@@ -12,13 +12,17 @@ Most programs will not need access to other running processes or be able to list
 Let’s jump straight in with a practical example of PID namespaces in action.
 
 
-Start container 'c1' with 'sleep 1d' process:
+Start container 'c1' and 'c2' with 'sleep 1d' and 'sleep 2d' process:
 
 ```execute
 docker run --name c1 -d ubuntu sleep 1d
 ```
 
-Now Exec in to container and list the running processes:
+```execute
+docker run --name c2 -d ubuntu sleep 2d
+```
+
+Now Exec in to container c1 and list the running processes:
 
 ```execute
 docker exec c1 ps aux
@@ -32,33 +36,18 @@ root         1  0.2  0.0   2512   596 ?        Ss   05:06   0:00 sleep 1d
 root         6  0.0  0.0   5900  2944 ?        Rs   05:06   0:00 ps aux
 ```
 
-Run another container and verify the list of processes for that container
-
-Start container 'c2' with 'sleep 2d' process:
-
-```execute
-docker run --name c2 -d ubuntu sleep 2d
-```
-
-Now Exec in to both the containers and list the running processes:
-
-```execute
-docker exec c1 ps aux
-```
-
-```
-USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
-root         1  0.2  0.0   2512   596 ?        Ss   05:06   0:00 sleep 1d
-root         6  0.0  0.0   5900  2944 ?        Rs   05:06   0:00 ps aux
-```
+Now Exec in to container c2 and list the running processes:
 
 ```execute
 docker exec c2 ps aux
 ```
 
+```
 USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
-root         1  0.1  0.0   2512   592 ?        Ss   05:08   0:00 sleep 2d
-root         6  0.0  0.0   5900  2972 ?        Rs   05:08   0:00 ps aux
+root         1  0.2  0.0   2512   592 ?        Ss   19:37   0:00 sleep 2d
+root         8  0.0  0.0   5900  3024 ?        Rs   19:37   0:00 ps aux
+```
+
 
 As can be seen in the listing above, processes residing in other container are not visible. What this indicates is that when the container is being run, any processes running inside of the container are by default isolated in docker.
 
@@ -75,7 +64,6 @@ Remove  container c2
 docker rm c2 --force
 ```
 
-
 Now create container c2 in c1 PID namespace 
 
 ```execute
@@ -90,6 +78,13 @@ docker exec c1 ps aux
 
 ```execute
 docker exec c2 ps aux
+```
+
+```
+USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root         1  0.0  0.0   2512   580 ?        Ss   19:37   0:00 sleep 1d
+root         7  0.6  0.0   2512   532 ?        Ss   19:37   0:00 sleep 2d
+root        13  0.0  0.0   5900  2972 ?        Rs   19:38   0:00 ps aux
 ```
 
 We should see the output listing the processes in both the containers, As both are part of same PID namespace.

@@ -5,6 +5,12 @@ a Pod or Container. Security context settings include, but are not limited to:
 [user ID (UID) and group ID (GID)](https://wiki.archlinux.org/index.php/users_and_groups).
 
 
+Change location to the `~/dedicated-user-kubernetes` sub directory.
+
+```execute
+cd ~/dedicated-user-kubernetes
+```
+
 
 ## Set the security context for a Pod
 
