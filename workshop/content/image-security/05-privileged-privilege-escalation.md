@@ -86,9 +86,13 @@ Output - Read only filesystem
 
 ```execute
 exit
-kubectl delete pod run-as-non-root-pod
 ```
 
+Delete Pod
+
+```execute
+kubectl delete pod run-as-non-root-pod
+```
 
 Lets run the container as root and see if we able to perform "sysctl kernel.hostname=something"
 
@@ -153,6 +157,11 @@ We still looking at same error, so its not just because of this. Even if we are 
 
 ```execute
 exit
+```
+
+Delete Pod
+
+```execute
 kubectl delete pod run-as-root-pod
 ```
 
@@ -207,5 +216,10 @@ This time it should work. Privileged mode for containers
 
 ```execute
 exit
+```
+
+Delete Pod
+
+```execute
 kubectl delete pod privileged-pod
 ```

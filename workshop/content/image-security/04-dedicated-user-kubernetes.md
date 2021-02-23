@@ -133,9 +133,13 @@ Exit your shell:
 
 ```execute
 exit
-kubectl delete pod security-context-demo
 ```
 
+Delete Pod
+
+```execute
+kubectl delete pod security-context-demo
+```
 
 ## Set the security context for a Container
 
@@ -202,5 +206,10 @@ Exit your shell:
 
 ```execute
 exit
+```
+
+Delete Pod
+
+```execute
 kubectl delete pod security-context-demo-2
 ```

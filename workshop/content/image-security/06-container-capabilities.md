@@ -97,6 +97,13 @@ adds the `CAP_NET_ADMIN` and `CAP_SYS_TIME` capabilities:
         capabilities:
             add: ["NET_ADMIN", "SYS_TIME"]
 
+Change location to the `~/container-capabilities` sub directory.
+
+```execute-2
+clear
+cd ~/container-capabilities
+```
+
 
 Create the Pod:
 
