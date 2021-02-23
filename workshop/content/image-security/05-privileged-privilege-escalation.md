@@ -17,6 +17,7 @@ Change location to the `~/privileged-privilege-escalation` sub directory.
 
 
 ```execute
+clear
 cd ~/privileged-privilege-escalation
 ```
 
@@ -71,6 +72,12 @@ Not lets try to access some system functionalities
 kubectl exec -it run-as-non-root-pod -- sh 
 ```
 
+Verify container is running as non-root
+
+```execute
+ps aux
+```
+
 ```execute
 sysctl kernel.hostname=something
 ```
@@ -79,6 +86,7 @@ Output - Read only filesystem
 
 ```execute
 exit
+kubectl delete pod run-as-non-root-pod
 ```
 
 
@@ -129,6 +137,12 @@ Not lets try to access some system functionalities
 kubectl exec -it run-as-root-pod -- sh 
 ```
 
+Verify container is running as root
+
+```execute
+ps aux
+```
+
 ```execute
 sysctl kernel.hostname=something
 ```
@@ -139,6 +153,7 @@ We still looking at same error, so its not just because of this. Even if we are 
 
 ```execute
 exit
+kubectl delete pod run-as-root-pod
 ```
 
 Lets try Privileged mode - 
@@ -190,4 +205,7 @@ sysctl kernel.hostname=something
 
 This time it should work. Privileged mode for containers
 
-
+```execute
+exit
+kubectl delete pod privileged-pod
+```

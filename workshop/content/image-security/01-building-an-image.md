@@ -3,6 +3,7 @@ Various tools are available to help you run applications in containers. The most
 To create our first container, change to the `~/building-an-image` sub directory.
 
 ```execute
+clear
 cd ~/building-an-image
 ```
 

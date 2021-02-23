@@ -4,6 +4,7 @@ To illustrate the key issue we want to address, run the `greeting` container ima
 Change to the `~/run-as-root` sub directory.
 
 ```execute
+clear
 cd ~/run-as-root
 ```
 

@@ -8,6 +8,7 @@ a Pod or Container. Security context settings include, but are not limited to:
 Change location to the `~/dedicated-user-kubernetes` sub directory.
 
 ```execute
+clear
 cd ~/dedicated-user-kubernetes
 ```
 
@@ -38,8 +39,6 @@ Here is a configuration file for a Pod that has a `securityContext` and an `empt
         volumeMounts:
         - name: sec-ctx-vol
         mountPath: /data/demo
-        securityContext:
-        allowPrivilegeEscalation: false
 
 
 In the configuration file, the `runAsUser` field specifies that for any Containers in
@@ -134,6 +133,7 @@ Exit your shell:
 
 ```execute
 exit
+kubectl delete pod security-context-demo
 ```
 
 
@@ -161,7 +161,6 @@ and the Container have a `securityContext` field:
         image: gcr.io/google-samples/node-hello:1.0
         securityContext:
         runAsUser: 2000
-        allowPrivilegeEscalation: false
 
 
 Create the Pod:
@@ -203,4 +202,5 @@ Exit your shell:
 
 ```execute
 exit
+kubectl delete pod security-context-demo-2
 ```

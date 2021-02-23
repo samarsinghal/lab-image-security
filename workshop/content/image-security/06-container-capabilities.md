@@ -21,6 +21,7 @@ Here is configuration file that does not add or remove any Container capabilitie
 Change location to the `~/container-capabilities` sub directory.
 
 ```execute
+clear
 cd ~/container-capabilities
 ```
 
@@ -99,19 +100,19 @@ adds the `CAP_NET_ADMIN` and `CAP_SYS_TIME` capabilities:
 
 Create the Pod:
 
-```execute
+```execute-2
 kubectl apply -f security-context-4.yaml
 ```
 
 Get a shell into the running Container:
 
-```execute
+```execute-2
 kubectl exec -it security-context-demo-4 -- sh
 ```
 
 In your shell, view the capabilities for process 1:
 
-```execute
+```execute-2
 cd /proc/1
 cat status
 ```

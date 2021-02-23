@@ -7,6 +7,7 @@ The best approach is to add a new dedicated user account and setup the container
 Change location to the `~/dedicated-user` sub directory.
 
 ```execute
+clear
 cd ~/dedicated-user
 ```
 
